@@ -12,10 +12,16 @@ pipeline {
                 bat 'npm run ng -- build'
             }
         }
-        stage('Test') {
+        stage('Package') {
             steps {
-                 bat 'npm run ng -- test'
+                bat 'npm run ng -- build --prod --base-href /helloangular/'
             }
         }
+        stage('Deploy') {
+            steps {
+                bat 'xcopy %WORKSPACE%\\dist\\HelloWorldAngular\\*.* C:\\inetpub\\wwwroot\\HelloAngularAppFiles /E/I/Y'
+            }
+        }
+        
     }
 }
